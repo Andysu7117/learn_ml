@@ -25,3 +25,8 @@ Finding relationships with the learning -> find something interesting in unlabel
 
 #### Dimensionality Reduction
 - Compress data using fewer numbers
+
+
+## Terminology
+- Training set: data used to train model
+- Feature: the input variable, x the input variable, y the output variable, m the number of training examples
