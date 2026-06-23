@@ -3,7 +3,8 @@ import os
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from azure.ai.projects import AIProjectClient
 from dotenv import load_dotenv
-from openai import OpenAI
+from openai import OpenAI, AsyncOpenAI
+import asyncio
 
 load_dotenv()
 
@@ -67,3 +68,16 @@ while True:
 # )
 
 # print(f"Assistant: {response2.output_text}")
+client = AsyncOpenAI()
+
+async def stream_response():
+    stream = await client.responses.create(
+        model="gpt-4o-mini",
+        input="Write a haiku about coding",
+        stream=True
+    )
+
+    async for event in stream:
+        print(event, end="", flush=True)
+
+asyncio.run(stream_response())
