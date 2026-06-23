@@ -21,6 +21,9 @@ while True:
     if input_text.lower() == "quit":
         print("Assistant: Goodbye!")
         break
+    if len(input_text) == 0:
+        print("Please enter a prompt.")
+        continue
 
     conversation_messages.append({"role": "user", "content": input_text})
 

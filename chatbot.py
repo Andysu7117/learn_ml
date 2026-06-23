@@ -34,6 +34,9 @@ while True:
     if input_text.lower() == "quit":
         print("Assistant: Goodbye!")
         break
+    if len(input_text) == 0:
+        print("Please enter a prompt.")
+        continue
 
     response = openai_client.responses.create(
         model="gpt-4.1-mini",
