@@ -43,6 +43,7 @@ while True:
         instructions="You are an nba knowledge expert assistant, knowing all nba facts and stats, that answers questions clearly and concisely",
         input=input_text,
         max_output_tokens=200,
+        tools=[{"type": "web_search"}],
         previous_response_id=last_response_id
     )
     assistant_text = response.output_text
@@ -71,16 +72,16 @@ while True:
 # )
 
 # print(f"Assistant: {response2.output_text}")
-client = AsyncOpenAI()
+# client = AsyncOpenAI()
 
-async def stream_response():
-    stream = await client.responses.create(
-        model="gpt-4o-mini",
-        input="Write a haiku about coding",
-        stream=True
-    )
+# async def stream_response():
+#     stream = await client.responses.create(
+#         model="gpt-4o-mini",
+#         input="Write a haiku about coding",
+#         stream=True
+#     )
 
-    async for event in stream:
-        print(event, end="", flush=True)
+#     async for event in stream:
+#         print(event, end="", flush=True)
 
-asyncio.run(stream_response())
+# asyncio.run(stream_response())
