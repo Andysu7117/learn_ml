@@ -26,12 +26,44 @@ project_client = AIProjectClient(
 
 openai_client = OpenAI()
 
-response = openai_client.responses.create(
-    model="gpt-4.1-mini",
-    input="What is Microsoft Foundry?"
-)
+last_response_id = None
+print("Assistant: Enter a prompt (or type 'quit' to exit)")
+while True:
+    input_text = input('\nYou: ')
+    if input_text.lower() == "quit":
+        print("Assistant: Goodbye!")
+        break
 
-print(f"Response: {response.output_text}")
-print(f"Response ID: {response.id}")
-print(f"Tokens used: {response.usage.total_tokens}")
-print(f"Status: {response.status}")
+    response = openai_client.responses.create(
+        model="gpt-4.1-mini",
+        instructions="You are an nba knowledge expert assistant, knowing all nba facts and stats, that answers questions clearly and concisely",
+        input=input_text,
+        max_output_tokens=200,
+        previous_response_id=last_response_id
+    )
+    assistant_text = response.output_text
+    print(f"\nAssistant: {assistant_text}")
+    last_response_id = response.id
+
+# response1 = openai_client.responses.create(
+#     model="gpt-4.1-mini",
+#     instructions="You are an nba knowledge expert assistant, knowing all nba facts and stats, that answers questions clearly and concisely",
+#     input="Who are to top 5 all time scorers?",
+#     max_output_tokens=200
+# )
+
+# print(f"Assistant: {response1.output_text}")
+# print(f"Response ID: {response.id}")
+# print(f"Tokens used: {response.usage.total_tokens}")
+# print(f"Status: {response.status}")
+
+# Continue the conversation
+# response2 = openai_client.responses.create(
+#     model="gpt-4.1-mini",
+#     instructions="You are an nba knowledge expert assistant, knowing all nba facts and stats, that answers questions clearly and concisely",
+#     input="how many more games does Lebron need to be the all time scorer?",
+#     previous_response_id=response1.id,
+#     max_output_tokens=200
+# )
+
+# print(f"Assistant: {response2.output_text}")
