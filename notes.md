@@ -81,6 +81,71 @@ Fine-tuning: Fine-tuning produces the most consistent model behavior because the
 3. Add fine-tuning if consistency matters: If the model doesn't reliably maintain the desired style, tone, or format despite detailed prompts, fine-tune the model with representative examples.
 4. Combine as needed: Layer strategies based on your application's specific requirements. Not every application needs all three.
 
+## AI Agents
+
+#### Security Risks
+- Data leakage and privacy exposure
+- Prompt injection and manipulation attacks
+- Unauthorized access and privilege escalation
+- Data poisoning
+- Supply Chain vulnerabilities
+- Over-reliance on autonomous actions
+- Inadequate auditability and logging
+- Model Inversion and output leakage
+
+#### Mitigation Strategies
+- Enforcing role-based access controls (RBAC) and least privilege permissions
+- Adding prompt filtering and validation layers to prevent injection attacks
+- Sandboxing or gating sensitive operations behind human-in-the-loop approvals
+- Maintaining comprehensive logging and traceability for all agent actions
+- Auditing third-party dependencies and integrations regularly
+- Continuously retraining and validating models to detect data drift or poisoning attempts
+
+#### Agent types on Microsoft Foundry
+- Declarrative Agents: agents defined through configuration rather than code
+    - Prompt-based agents: a single agent configured with a model, instructions, tools, and prompts. Most common type of agent
+    - Workflow agents: multi-agent orchestrations defined in YAML, enabling complex scenarios where multiple agents collaborate to complete tasks
+- Hosted Agents: ontainerized agents that are created and deployed in code, then hosted by the foundry platform. Hosted agents give you full control over agent logic and execution while the platform manages infrastructure.
+
+#### Features of Microsoft Foundry Agent Service
+- Automatic tool calling - The service handles the entire tool-calling lifecycle, including running the model, invoking tools, and returning results. This eliminates complex integration code.
+
+- Securely managed data - Conversation states are securely managed through the Responses API, removing the need for manual state management.
+
+- Extensive tool catalog - A rich set of built-in and community tools extends agent capabilities beyond text generation, including code execution, file search, web search, and integrations with Azure services and external APIs.
+
+- Model selection - Choose from various AI models to match your performance and cost requirements.
+
+- Enterprise-grade security - The service ensures data privacy and compliance with secure data handling, keyless authentication, and built-in content safety filters.
+
+- Customizable storage solutions - Use platform-managed storage or bring your own Azure Blob storage for full visibility and control.
+
+- Observability and tracing - Built-in monitoring capabilities help you track agent behavior, debug issues, and optimize performance in production.
+
+#### When to use the Foundry Portal
+- Quick prototyping - Rapidly test agent concepts and configurations without setting up development environments
+- Visual configuration - Configure agents through intuitive forms and dropdowns rather than code
+- Centralized management - View and manage all agents across projects in one place
+- Team collaboration - Share agent configurations with stakeholders who prefer visual interfaces
+- Resource oversight - Monitor token usage, latency, and evaluation outcomes through dashboards
+
+#### When to use Visual Studio Code Extention
+- Developer-centric workflows - Build agents alongside your application code in a single environment
+- Version control integration - Track agent configurations in Git alongside your codebase
+- Rapid iteration - Make quick changes and test immediately without switching tools
+- Code-first development - Edit YAML configurations directly for precise control
+- Local development - Work on agent designs offline before deploying to Azure
+
+#### Typical Development Workflow
+1. Connect to your Microsoft Foundry project
+2. Create an AI agent in the Foundry portal with a descriptive name and purpose
+3. Configure agent instructions defining its behavior and capabilities (in the portal or VS Code)
+4. Add tools to extend what the agent can do
+5. Test the agent using integrated playgrounds
+5. Iterate on the design based on test results
+6. Deploy the agent to production
+7. Integrate the agent into your applications
+
 ## Terminology
 - Training set: data used to train model
 - Feature: the input variable, x the input variable, y the output variable, m the number of training examples
