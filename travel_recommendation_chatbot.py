@@ -16,12 +16,13 @@ vector_store = openai_client.vector_stores.create(
     name="travel_brochures"
 )
 
-file_streams = [open(f, "rb") for f in glob.glob("travel_pdfs/*pdf")]
+file_streams = [open(f, "rb") for f in glob.glob("travel_pdfs/*.pdf")]
 
 if not file_streams:
     print("No PDF files in travel_pdfs folder")
     os.exit(1)
-file_batch = openai_client.vectore_stores.file_batches.upload_and_poll(
+
+file_batch = openai_client.vector_stores.file_batches.upload_and_poll(
     vector_store_id=vector_store.id,
     files=file_streams
 )
