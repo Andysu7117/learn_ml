@@ -146,7 +146,13 @@ async def chat_loop(session):
                     )
 
             # Send function call outputs back to the model and retrieve a response
-           
+            if input_list:
+                response = openai_client.responses.create(
+                        input=input_list,
+                        previous_response_id=response.id,
+                        extra_body={"agent_reference": {"name": agent.name, "type": "agent_reference"}},
+                )
+            print(f"Agent response: {response.output_text}")
            
         # Delete the agent when done
         print("Cleaning up agents:")
