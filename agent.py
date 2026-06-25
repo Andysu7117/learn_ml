@@ -10,7 +10,6 @@ from dotenv import load_dotenv
 load_dotenv()
 project_endpoint = os.getenv("PROJECT_ENDPOINT")
 
-
 with (
     DefaultAzureCredential() as credential,
     AIProjectClient(endpoint=project_endpoint, credential=credential) as project_client,
@@ -97,3 +96,18 @@ with (
         },
         strict=True,
     )
+
+agent = project_client.agents.create_version(
+    agent_name="astronomy-agent",
+    definition=PromptAgentDefinition(
+        model="gpt-4.1-mini",
+        instructions=
+            """You are an astronomy observations assistant that helps users find 
+            information about astronomical events and calculate telescope rental costs. 
+            Use the available tools to assist users with their inquiries.""",
+        tools=[event_tool, cost_tool, report_tool],
+    ), 
+)
+
+# Create a thread for the chat session
+conversation = openai_client.conversations.create()
