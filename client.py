@@ -65,8 +65,22 @@ async def chat_loop(session):
             tool_func.__name__ = tool_name
             return tool_func
 
-        # Create FunctionTool definitions for the agent
         functions_dict = {tool.name: make_tool_func(tool.name) for tool in tools}
+
+        # Create FunctionTool definitions for the agent
+        mcp_function_tools: FunctionTool = []
+        for tool in tools:
+            function_tool = FunctionTool(
+                name=tool.name,
+                description=tool.description,
+                parameters={
+                    "type": "object",
+                    "properties": {},
+                    "additionalProperties": False,
+                },
+                strict=True
+            )
+            mcp_function_tools.append(function_tool)
 
         # Create the agent
 
