@@ -146,6 +146,13 @@ Fine-tuning: Fine-tuning produces the most consistent model behavior because the
 6. Deploy the agent to production
 7. Integrate the agent into your applications
 
+#### Testing Strategies
+- Happy path testing - Verify the agent handles common, expected requests correctly.
+- Edge case testing - Try ambiguous inputs, incomplete information, and unusual requests to reveal how agents handle uncertainty.
+- Boundary testing - Confirm the agent respects boundaries defined in its instructions by testing out-of-scope requests.
+- Multi-turn conversation testing - Verify the agent maintains context across multiple exchanges and builds on previous responses.
+- Tool invocation testing - Verify agents call the right tools at the right times and incorporate results correctly.
+
 ## Terminology
 - Training set: data used to train model
 - Feature: the input variable, x the input variable, y the output variable, m the number of training examples

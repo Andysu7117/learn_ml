@@ -87,8 +87,8 @@ def format_output_text(content_item, openai_client, downloaded_files):
     return text, referenced_files
 
 def main():
-    system_prompt = "You are a travel assistant that provides information on travel services available from all platforms and suggest the best option and the next best alternative."
-    last_response_id = None
+    # system_prompt = "You are a travel assistant that provides information on travel services available from all platforms and suggest the best option and the next best alternative."
+    # last_response_id = None
 
     load_dotenv()
     project_endpoint = os.getenv("PROJECT_ENDPOINT")
@@ -106,7 +106,7 @@ def main():
         endpoint=project_endpoint
     )
 
-    model_deployment = os.getenv("MODEL_DEPLOYMENT")
+    # model_deployment = os.getenv("MODEL_DEPLOYMENT")
     openai_client = project_client.get_openai_client()
 
     print(f"Loading agent: {agent_name}")
