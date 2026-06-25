@@ -176,6 +176,22 @@ Patterns that need to be traced
 - Query types - What categories of questions appear most often?
 - Retrieval accuracy - Do retrieved documents actually contain answers?
 
+## Agent in m365
+Steps to publishing agent
+1. Select your agent version
+2. Start the publishing process
+3. Configure Azure Both Service
+4. Complete the metadata: Fill in the required fields
+    - Name
+    - Description
+    - Icons
+    - Publisher Information
+    - Privacy Policy
+    - Terms of use
+5. Choose your publish scope
+6. Prepare and optionally download the package
+
+
 ## Terminology
 - Training set: data used to train model
 - Feature: the input variable, x the input variable, y the output variable, m the number of training examples
