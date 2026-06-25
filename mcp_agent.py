@@ -46,3 +46,29 @@ def main():
             input="Give me the Azure CLI commands to create an Azure Container App with a managed identity.",
         extra_body={"agent_reference": {"name": agent.name, "type": "agent_reference"}},
         )
+
+        # Process any MCP approval requests that were generated
+        input_list: ResponseInputParam = []
+        for item in response.output:
+            if item.type == "mcp_approval_request":
+                if item.server_label == "api-specs" and item.id:
+                    # Automatically approve the MCP request to allow the agent to proceed
+                    input_list.append(
+                        McpApprovalResponse(
+                            type="mcp_approval_response",
+                            approve=True,
+                            approval_request_id=item.id,
+                        )
+                    )
+
+        print("Final input:")
+        print(input_list)
+
+        # Send the approval response back and retrieve a response
+        response = openai_client.responses.create(
+            input=input_list,
+            previous_response_id=response.id,
+            extra_body={"agent_reference": {"name": agent.name, "type": "agent_reference"}},
+        )
+
+        print(f"\nAgent response: {response.output_text}")
