@@ -35,3 +35,14 @@ def main():
             ),
         )
         print(f"Agent created (id: {agent.id}, name: {agent.name}, version: {agent.version})")
+
+        # Create a conversation thread
+        conversation = openai_client.conversations.create()
+        print(f"Created conversation (id: {conversation.id})")
+
+        # Send initial request that will trigger the MCP tool
+        response = openai_client.responses.create(
+            conversation=conversation.id,
+            input="Give me the Azure CLI commands to create an Azure Container App with a managed identity.",
+        extra_body={"agent_reference": {"name": agent.name, "type": "agent_reference"}},
+        )
