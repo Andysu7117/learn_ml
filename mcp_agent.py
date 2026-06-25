@@ -1,0 +1,26 @@
+import os
+from dotenv import load_dotenv
+
+# Add references
+from azure.identity import DefaultAzureCredential
+from azure.ai.projects import AIProjectClient
+from azure.ai.projects.models import PromptAgentDefinition, MCPTool
+from openai.types.responses.response_input_param import McpApprovalResponse, ResponseInputParam
+
+def main():
+    load_dotenv()
+    project_endpoint = os.getenv("PROJECT_ENDPOINT")
+    model_deployment = "gpt-4.1-mini"
+
+    with (
+        DefaultAzureCredential() as credential,
+        AIProjectClient(endpoint=project_endpoint, credential=credential) as project_client,
+        project_client.get_openai_client() as openai_client,
+    ):
+
+        # Initialize agent MCP tool
+        mcp_tool = MCPTool(
+            server_label="api-specs",
+            server_url="https://learn.microsoft.com/api/mcp",
+            require_approval="always",
+        )
