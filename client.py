@@ -37,7 +37,9 @@ async def connect_to_server(exit_stack: AsyncExitStack):
     await session.initialize()
 
     # List available tools
-   
+    response = await session.list_tools()
+    tools = response.tools
+    print("\nConnected to server with tools:", [tool.name for tool in tools])
 
     return session
 
@@ -55,10 +57,16 @@ async def chat_loop(session):
         tools = response.tools
 
         # Build a function for each tool
-
+        def make_tool_func(tool_name):
+            async def tool_func(**kwargs):
+                result = await session.call_tool(tool_name, kwargs)
+                return result
+            
+            tool_func.__name__ = tool_name
+            return tool_func
 
         # Create FunctionTool definitions for the agent
-        
+        functions_dict = {tool.name: make_tool_func(tool.name) for tool in tools}
 
         # Create the agent
 
