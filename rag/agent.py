@@ -46,7 +46,65 @@ def send_message_to_agent(user_message):
         # TODO: Add user message to conversation and get response
         # Add your code here to:
         # 1. Add the user message to the conversation using conversations.items.create()
+        openai_client.conversations.items.create(
+            conversation_id=conversation.id,
+            items=[{"type": "message", "role": "user", "content": user_message}]
+        )
+
         # 2. Create a response using responses.create() with agent reference
+        response = openai_client.responses.create(
+            conversation=conversation.id,
+            extrabody={"agent_reference": {"name": agent.name, "type": "agent_reference"}},
+            input=""
+        )
+
+        approval_request = None
+        if hasattr(response, 'output') and response.output:
+            for item in response.output:
+                if hasattr(item, 'type') and item.type == 'mcp_approval_request':
+                    approval_request = item
+                    break
+
+        if approval_request:
+            print(f"[Approval required for: {approval_request.name}]\n")
+            print(f"Server: {approval_request.server_label}")
+
+            import json
+            try:
+                args = json.loads(approval_request.arguments)
+                print(f"Arguments: {json.dumps(args, indent=2)}\n")
+            except:
+                print(f"Arguments: {approval_request.arguments}\n")
+
+            approval_input = input("Approve this action? (yes/no):").strip().lower()
+
+            if approval_input in ['yes', 'y']:
+                print("Approving action...\n")
+
+                approval_response = {
+                    "type": "mcp_approval_response",
+                    "approval_request_id": approval_request.id,
+                    "approve": True
+                }
+            else:
+                print("Action denied.\n")
+
+                approval_response = {
+                    "type": "mcp_approval_response",
+                    "approval_request_id": approval_request.id,
+                    "approve": False
+                }
+
+            openai_client.conversations.items.create(
+                conversation_id=conversation.id,
+                items=[approval_response]
+            )
+
+            response = openai_client.responses.create(
+                conversation=conversation.id,
+                extra_body={"agent_reference": {"name": agent.name, "type": "agent_reference"}},
+                input=""
+            )
         # 3. Extract and display the response text
         # 4. Check for and display any citations
         # Your code will go here
