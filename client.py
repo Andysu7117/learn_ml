@@ -19,7 +19,7 @@ os.system('cls' if os.name=='nt' else 'clear')
 # Load environment variables from .env file
 load_dotenv()
 project_endpoint = os.getenv("PROJECT_ENDPOINT")
-model_deployment = os.getenv("gpt-4.1-mini")
+model_deployment = "gpt-4.1-mini"
 
 async def connect_to_server(exit_stack: AsyncExitStack):
     server_params = StdioServerParameters(
