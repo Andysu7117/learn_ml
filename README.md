@@ -191,6 +191,15 @@ Steps to publishing agent
 5. Choose your publish scope
 6. Prepare and optionally download the package
 
+## Microsoft Agent Framework
+
+#### Core componenents
+- Agents: provides consistent interface and enables different features like multi-agent orchestration. Out of the box agents, support function calling, multi-turn conversations with chat history, service-provided tools, structured outputs and streaming responses
+- Chat providers: provide abstractions for connecting to AI services from different providers under a common interface. Supported providers include Azure OpenAI, OpenAI, Anthropic, Copilot, and more through the BaseAgent abstraction
+- Function tools: containters for custom functions that extend agent capabilities. Agents can automatically invoke functions to integrate with external APIs and services.
+- Built-in tools: prebuilt capabilities including code interpreter for python execution, File Search for document analysis, and Web Search for internet access.
+- Conversation management: structured message system with roles (USER, ASSISTANT, SYSTEM, TOOL) and AgentSession for persistent conversation context across interactions
+- Workflow orchestration: supports sequential workflows, concurrent execution, group chat, and handoff patterns for complex multi-agent collaboration.
 
 ## Terminology
 - Training set: data used to train model
