@@ -153,6 +153,29 @@ Fine-tuning: Fine-tuning produces the most consistent model behavior because the
 - Multi-turn conversation testing - Verify the agent maintains context across multiple exchanges and builds on previous responses.
 - Tool invocation testing - Verify agents call the right tools at the right times and incorporate results correctly.
 
+## Rag
+
+#### What to test?
+- Straightforward Factual
+    - example questions - what is our vacation policy?, where can I find the security guidelines
+    - Expected behaviour - direct retrieval with citations
+- Questions requiring synthesis
+    - example questions - what are the differences between our leave types?, how do I request time off?
+    - expected behaviour - multiple document retrieval, synthesized answer with multiple citations
+- Questions outside knowledge base
+    - example questions - what's the weather like today?, tell me about machine learning
+    - expected behaviour - gracefull fallback ("I don't have that information")
+- Ambiguous questions
+    - example questions - what about benefits?, tell me more about that
+    - expected behaviour - clarifying questions or focused search on most relevant topic
+
+#### Moving from testing to production
+Patterns that need to be traced
+- Citation frequency - Are agents consistently citing sources?
+- Fallback frequency - How often do agents say "I don't know"?
+- Query types - What categories of questions appear most often?
+- Retrieval accuracy - Do retrieved documents actually contain answers?
+
 ## Terminology
 - Training set: data used to train model
 - Feature: the input variable, x the input variable, y the output variable, m the number of training examples
