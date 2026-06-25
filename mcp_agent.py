@@ -72,3 +72,10 @@ def main():
         )
 
         print(f"\nAgent response: {response.output_text}")
+
+        # Clean up resources by deleting the agent version
+        project_client.agents.delete_version(agent_name=agent.name, agent_version=agent.version)
+        print("Agent deleted")
+
+if __name__ == '__main__':
+    main()
